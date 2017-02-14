@@ -1,0 +1,87 @@
+4 + 6 * 5 + ( 6 - 2 ) - 1 #
+4 + 30 + (4) - 1 = 37
+
+userQueue[4+6*5+(6-2)-1#]
+
+myQueue[465*+] //aka myStack
+
+BigBooty[+*]
+
+b=5, a=6
+x=*
+a*b= 30
+
+b=30, a=4
+x=+
+a+b = 34
+
+b=2, a=6
+x=-
+a-b = 4
+
+b=4, a=34
+x=+
+a+b=38
+
+b=1 a=38
+x=-
+a-b=37
+
+Stack myStack
+Stack BigBooty
+
+Queue<char> userQueue
+
+cin >> string
+
+for(int i = 0; i < string.size(); i++) {
+	if(string[i] != " ") {
+		userQueue.enqueue(string[i]);
+	}
+}
+
+while(userQueue.front() != "#") {
+	if(isdigit(userQueue.front())){
+		myStack.push(userQueue.dequeue());
+	} else {
+		tempChar = userQueue.dequeue();
+		switch(operatorToInt(tempChar)) {
+		case 0:
+			BigBooty.push(tempChar);
+			break;
+		case 1:
+			while((operatorToInt(BigBooty.top()) >= 1) && !myStack.isEmpty()) {
+				myStack.push(BigBooty.pop());
+			}
+			BigBooty.push(tempChar);
+			break;
+		case 2:
+			while((operatorToInt(BigBooty.top()) >= 2) && !myStack.isEmpty()) {
+				myStack.push(BigBooty.pop());
+			}
+			BigBooty.push(tempChar);
+			break;
+		case 3:
+			while(operatorToInt(BigBooty.top() != 0) && !myStack.isEmpty()) {
+				myStack.push(BigBooty.pop());
+			}
+			char trashChar = BigBooty.pop();
+			break;
+		}
+	}
+}
+myStack.push(userQueue.dequeue());
+
+//myQueue has a postfix form of the expression
+
+
+
+
+
+
+int operatorToInt(char c) {
+	if (c == '(') return 0;
+	if (c == '+' || c == '-') return 1;
+	if (c == '*' || c == '/') return 2;
+	if (c == ')') return 3;
+}
