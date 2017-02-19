@@ -2,20 +2,21 @@
 #include "Stack.h"
 #include "SLinkedList.h"
 #include "HeaderNode.h"
+#include "Queue.h"
 
 using namespace std;
 
 void askForEquation(string& equation);
-void parseEquation(string equation);
+void fillQueue(string equation);
 
 int main(){
     
-    Stack<int> intStack;
-    Stack<char> charStack;
+   
+    //Queue<char> userQueue;
     string equation = " ";
     
     askForEquation(equation);
-    parseEquation(equation);
+    fillQueue(equation);
     
     
     cout << equation << endl;
@@ -23,6 +24,7 @@ int main(){
 }
 
 void askForEquation(string& equation){
+   
     
     cout << "Enter an equation: \n";
     
@@ -31,8 +33,16 @@ void askForEquation(string& equation){
     
 }
 
-void parseEquation(string equation){
-
+void fillQueue(string equation){
     
+    Queue<char> userQueue;
+    Stack<int> intStack;
+    Stack<char> charStack;
 
+    for(int i = 0; i <= sizeof(equation); i++){
+        
+        userQueue.enqueue(equation[i]);
+        
+    }
+    
 }
