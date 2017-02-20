@@ -328,28 +328,3 @@ void evaluatePostfix(Queue<char>&postfixQueue, Stack<double>& calculatingStack, 
      push the resulting double onto the calculating stack
      */
 }
-
-void displayResult(char temp){
-   string temp2 = static_cast<string>(&temp);
-    Stack<int> intStack;
-    int num1;
-    int num2;
-    int result = 0;
-    
-    for(int i = 0; i < sizeof(temp2); i++){
-        if(isOperand(temp2[i])){
-            intStack.push(temp2[i]);
-            }
-    
-        else if(temp2[i] == '+'){
-            intStack.pop(num1);
-            intStack.pop(num2);
-            
-            result = num1 + num2;
-            
-            intStack.push(result);
-            
-        }
-    }
-    
-}
