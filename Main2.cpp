@@ -188,7 +188,7 @@ void infixToPostfix(Queue<char>& userQueue, Queue<char>& postfixQueue, Stack<cha
 			}
 
 			//If the precedence of the current operator is higher than the previous operator, push the current operator onto the stack
-			else if (operatorPrecedence(prevOperator) < operatorPrecedence(currentOutput)) {
+			else if (currentOutput == '(' || operatorPrecedence(prevOperator) < operatorPrecedence(currentOutput)) {
 				operatorStack.push(currentOutput);
 			}
 			else {
