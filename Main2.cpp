@@ -13,6 +13,7 @@ bool checkInput(Queue<char>&);
 bool isOperand(char);
 bool isOperator(char);
 bool validInput(char, char);
+int operatorPrecedence(char);
 
 int main() {
 
