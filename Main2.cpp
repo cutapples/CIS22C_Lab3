@@ -7,8 +7,7 @@
 using namespace std;
 
 void infixToPostfix(Queue<char>&, Queue<char>&, Stack<char>&);
-void evaluatePostfix(Queue<char>&, Stack<double>&, char temp);
-void displayResult(char temp);
+double evaluatePostfix(Queue<char>&, Stack<double>&);
 
 bool checkInput(Queue<char>&);
 bool isOperand(char);
@@ -24,6 +23,8 @@ int main() {
     Stack<char> operatorStack;
     Stack<double> calculatingStack;
     
+    double finalAnswer=0.0;
+    
     string userExp;
     
     bool invalidInput = false;
@@ -38,7 +39,7 @@ int main() {
         
         getline(cin, userExp);
         
-      
+        
         
         userExp.append("#");
         for (string::iterator i = userExp.begin(); i != userExp.end(); ++i) {
@@ -47,7 +48,7 @@ int main() {
             }
         }
         
-        //system("cls");
+       // system("cls");
         
         //Checking validity of the user's expression
         try {
@@ -69,30 +70,27 @@ int main() {
     //Infix to Postfix
     infixToPostfix(userQueue, postfixQueue, operatorStack);
     
+       //Postfix Evaluation
+   finalAnswer = evaluatePostfix(postfixQueue, calculatingStack);
     
-    //Postfix Evaluation
- 
     
     //Display Results
-   //while (!postfixQueue.isEmpty()) {
-    
-    for(int i = 0; i < sizeof(userExp)-1; i++){
+    while (!postfixQueue.isEmpty()) {
         char temp;
         postfixQueue.dequeue(temp);
         cout << temp;
-        evaluatePostfix(postfixQueue, calculatingStack, temp);
-
+        
     }
-   //}
+    
+    cout << finalAnswer << endl;
     
     
-
-
+    
+    
     cout << endl;
     
-
     
-
+    return 0;
 }
 
 bool checkInput(Queue<char>& userQueue) {
@@ -239,85 +237,7 @@ void infixToPostfix(Queue<char>& userQueue, Queue<char>& postfixQueue, Stack<cha
     }
 }
 
-void evaluatePostfix(Queue<char>&postfixQueue, Stack<double>& calculatingStack, char temp) {
-  
-    char c;
-    double num1, num2, result;
-   
-    
-    
-    postfixQueue.enqueue(c);
-    if(isOperand(c)){
-        double temp = c;
-        calculatingStack.push(temp);
-    }
-
-
-    else{
-     if(c == '+'){
-        calculatingStack.pop(num1);
-        calculatingStack.pop(num2);
-        
-        result = num1 + num2;
-        
-        calculatingStack.push(result);
-         
-        // calculatingStack.top();
-        
-    }
-    
-    else if(c == '-'){
-        calculatingStack.pop(num1);
-        calculatingStack.pop(num2);
-        result = num1 - num2;
-        calculatingStack.push(result);
-        // calculatingStack.top();
-
-
-    }
-    
-    else if(c == '*'){
-        calculatingStack.pop(num1);
-        calculatingStack.pop(num2);
-        result = num1 * num2;
-        calculatingStack.push(result);
-        
-        // calculatingStack.top();
-
-    }
-    
-    else if(c == '^'){
-        calculatingStack.pop(num1);
-        calculatingStack.pop(num2);
-        result = pow(num1, num2);
-        calculatingStack.push(result);
-        
-        // calculatingStack.top();
-
-    }
-    
-    else if(c == '/'){
-        calculatingStack.pop(num1);
-        calculatingStack.pop(num2);
-        
-        
-        if(num2 == 0){
-            cout << "You can not divide by 0!!!\n";
-        }
-        
-        else{
-            result = num1 / num2;
-            calculatingStack.push(result);
-            
-            // calculatingStack.top();
-            
-        }
-
-    }
-
-}
-
-
+double evaluatePostfix(Queue<char>&postfixQueue, Stack<double>& calculatingStack) {
     /*
      Dequeue postfixQueue onto a char variable
      If it's a number (use isOperand) convert it into a double and put it on the calculating stack
@@ -327,4 +247,91 @@ void evaluatePostfix(Queue<char>&postfixQueue, Stack<double>& calculatingStack, 
      Make sure to check for dividing by zero when you do division
      push the resulting double onto the calculating stack
      */
+
+    char c;
+    double num1, num2, result, finalAnswer = 0.0;
+
+    //while(postfixQueue.front() != '#'){
+
+        
+    
+    c = postfixQueue.front();
+    
+        if(c == '#'){
+            
+            calculatingStack.top(finalAnswer);
+            
+            cout << finalAnswer << endl;
+           // break;
+        }
+        
+        
+    else if(isOperand(c)){
+        int temp = c - '0';
+        calculatingStack.push(temp);
+    }
+    
+    
+    else{
+        if(c == '+'){
+            calculatingStack.pop(num1);
+            calculatingStack.pop(num2);
+            
+            result = num1 + num2;
+            
+            postfixQueue.dequeue();
+            
+            calculatingStack.push(result);
+            
+        }
+        
+        else if(c == '-'){
+            calculatingStack.pop(num1);
+            calculatingStack.pop(num2);
+            result = num1 - num2;
+            calculatingStack.push(result);
+            
+            
+        }
+        
+        else if(c == '*'){
+            calculatingStack.pop(num1);
+            calculatingStack.pop(num2);
+            result = num1 * num2;
+            calculatingStack.push(result);
+            
+            
+        }
+        
+        else if(c == '^'){
+            calculatingStack.pop(num1);
+            calculatingStack.pop(num2);
+            result = pow(num1, num2);
+            calculatingStack.push(result);
+            
+        }
+        
+        else if(c == '/'){
+            calculatingStack.pop(num1);
+            calculatingStack.pop(num2);
+            
+            
+            if(num2 == 0){
+                cout << "You can not divide by 0!!!\n";
+            }
+            
+            else{
+                result = num1 / num2;
+                calculatingStack.push(result);
+                //calculatingStack.top(finalAnswer);
+                
+            }
+            
+           calculatingStack.top(finalAnswer);
+        }
+        
+    // }
+            }
+    
+    return finalAnswer;
 }
