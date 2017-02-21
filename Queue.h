@@ -8,44 +8,45 @@ using namespace std;
 template <class T>
 class Queue : protected SLinkedList<T> {
 public:
-
-	void enqueue(T data);
-	void dequeue(T& data);
-	void dequeue();
-	void front(T& data);
-	bool isEmpty();
-	void emptyQueue();
+    
+    void enqueue(T data);
+    void dequeue(T& data);
+    void dequeue();
+    T front();
+    bool isEmpty();
+    void emptyQueue();
 };
 
 template <class T>
 void Queue<T>::enqueue(T data) {
-	this->addBack(data);
+    this->addBack(data);
 }
 
 template <class T>
 void Queue<T>::dequeue(T& data) {
-	data = this->list->front->data;
-	this->removeFront();
+    data = this->list->front->data;
+    this->removeFront();
 }
 
 template <class T>
 void Queue<T>::dequeue() {
-	this->removeFront();
+    this->removeFront();
 }
 
 template <class T>
-void Queue<T>::front(T& data) {
-		data = this->list->front->data;
+T Queue<T>::front() {
+    //data = this->list->front->data;
+    return this->list->front->data;
 }
 
 template <class T>
 bool Queue<T>::isEmpty() {
-	return (this->list->count == 0);
+    return (this->list->count == 0);
 }
 
 template<class T>
 void Queue<T>::emptyQueue() {
-	this->emptyList();
+    this->emptyList();
 }
 
 #endif QUEUE_H
